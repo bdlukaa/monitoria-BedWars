@@ -25,7 +25,7 @@ public class Game {
         resetar();
     }
 
-    void iniciar() {
+    public void iniciar() {
         Bukkit.broadcastMessage("Iniciando jogo!! Boa sorte");
         for (Team team : teams) {
             // Teletransportar jogares
