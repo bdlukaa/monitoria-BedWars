@@ -3,6 +3,7 @@ package com.monitoria.bedwars.elements;
 import org.bukkit.Color;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
@@ -13,6 +14,10 @@ public class Team {
     public Player player1;
     public Player player2;
     public Player player3;
+
+    public Player[] getPlayers() {
+        return new Player[] {player1, player2, player3};
+    }
 
     // Spawn points
     public int x;
@@ -40,11 +45,27 @@ public class Team {
     // Ver a quantidade de jogadores do time vivos
     public int amountAlive() {
         int alive = 0;
-        if (player1.getGameMode() == GameMode.SURVIVAL) alive++;
-        if (player2.getGameMode() == GameMode.SURVIVAL) alive++;
-        if (player3.getGameMode() == GameMode.SURVIVAL) alive++;
+
+        for (Player player : getPlayers()) {
+            if (player != null && player.getGameMode() == GameMode.SURVIVAL) alive++;
+        }
 
         return alive;
+    }
+
+    public Material getBedMaterial() {
+        if (color.equals(Color.RED)) {
+            return Material.RED_BED;
+        } else if (color.equals(Color.WHITE)) {
+            return Material.WHITE_BED;
+        } else if (color.equals(Color.BLACK)) {
+            return Material.BLACK_BED;
+        } else if (color.equals(Color.BLUE)) {
+            return Material.BLUE_BED;
+        } else if (color.equals(Color.PURPLE)) {
+            return Material.PURPLE_BED;
+        }
+        return Material.RED_BED;
     }
 
 }

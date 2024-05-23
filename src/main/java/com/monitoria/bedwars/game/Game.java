@@ -25,7 +25,6 @@ public class Game {
         resetar();
     }
 
-
     void iniciar() {
         for (int i = 0; i < teams.size(); i++) {
             Team team = teams.get(i);
@@ -50,7 +49,7 @@ public class Game {
     }
 
     void resetar() {
-        World world = Bukkit.getWorld("overworld");
+        World world = Bukkit.getWorld("world");
 
         teams.clear();
         teams.add(new Team(Color.RED, -108, 52, -47, new ItemSpawner(new Location(world, -108, 50, -52), null)));
@@ -68,6 +67,4 @@ public class Game {
         itemSpawnPoints.add(new ItemSpawner(new Location(world, -136, 51, 0), Material.EMERALD));
         itemSpawnPoints.add(new ItemSpawner(new Location(world, -78, 51, 1), Material.DIAMOND));
     }
-
-
 }

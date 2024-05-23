@@ -10,13 +10,11 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 public final class BedWars extends JavaPlugin {
 
-    Game game;
-
     @Override
     public void onEnable() {
         Bukkit.getLogger().info(ChatColor.GREEN + "Enabled " + this.getName());
 
-        game = new Game();
+        Game game = new Game();
         getServer().getPluginManager().registerEvents(new GameListener(game), this);
     }
 

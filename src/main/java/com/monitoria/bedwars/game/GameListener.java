@@ -16,7 +16,7 @@ public class GameListener implements Listener {
     //Colocar limite de altura;
     //Colocar no modo Aventura quando entra e modo Survival quando inicia;
     //Lojinha e tals
-    Game game;
+    private final Game game;
 
     public GameListener(Game game) {
         this.game = game;
@@ -34,7 +34,6 @@ public class GameListener implements Listener {
         boolean added = false;
         for (int i = 0; i < game.teams.toArray().length; i++) {
             Team team = game.teams.get(i);
-
             if (team.player1 == null) {
                 team.player1 = player;
                 added = true;
@@ -54,9 +53,9 @@ public class GameListener implements Listener {
             player.setGameMode(GameMode.SPECTATOR);
         }
 
-        // if (playersJoined >= 6) {
+        if (playersJoined >= 6) {
             game.iniciar();
-        // }
+        }
     }
 
     @EventHandler
@@ -64,39 +63,31 @@ public class GameListener implements Listener {
         Player player = event.getEntity();
 
         Team team = null;
-        for (int i = 0; i < game.teams.toArray().length; i++) {
-            Team t = game.teams.get(i);
+        for (Team t : game.teams) {
+            for (Player teamPlayer : t.getPlayers()) {
+                if (teamPlayer == player) {
+                    team = t;
 
-            if (t.player1 == player) {
-                team = t;
-                break;
-            } else if (t.player2 == player) {
-                team = t;
-                break;
-            } else if (t.player3 == null) {
-                team = t;
-                break;
-            }
-        }
-        if (team != null) {
-            if (team.isBedActive) {
-                team.teleportPlayerToSpawn(player);
-            } else {
-                player.setGameMode(GameMode.SPECTATOR);
+                    if (team.isBedActive) {
+                        team.teleportPlayerToSpawn(player);
+                    } else {
+                        player.setGameMode(GameMode.SPECTATOR);
+                    }
+
+                    break;
+                }
             }
         }
 
         Team aliveTeam = null;
         int teamsAlives = 0;
-        for (int i = 0; i < game.teams.toArray().length; i++) {
-            Team t = game.teams.get(i);
+        for (Team t : game.teams) {
             if (t.amountAlive() >= 1) {
                 teamsAlives++;
                 aliveTeam = t;
             }
         }
         if (teamsAlives == 1) {
-            // GANHAR
             game.ganhar(aliveTeam);
         }
     }
@@ -106,21 +97,11 @@ public class GameListener implements Listener {
         Player player = event.getPlayer();
         Block block = event.getBlock();
 
-        Team team = null;
-        if (block.getType() == Material.RED_BED) {
-            team = game.teams.get(0);
-        } else if (block.getType() == Material.BLUE_BED) {
-            team = game.teams.get(1);
-        } else if (block.getType() == Material.BLACK_BED) {
-            team = game.teams.get(2);
-        } else if (block.getType() == Material.WHITE_BED) {
-            team = game.teams.get(3);
-        } else if (block.getType() == Material.PURPLE_BED) {
-            team = game.teams.get(4);
-        }
-        if (team != null) {
-            team.isBedActive = false;
-            System.out.println("Cama " + team.color.toString() + " quebrada");
+        for (Team team : game.teams) {
+            if (block.getType() == team.getBedMaterial()) {
+                team.isBedActive = false;
+                System.out.println("Cama " + team.color.toString() + " quebrada");
+            }
         }
     }
 
