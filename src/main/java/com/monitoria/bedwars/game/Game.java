@@ -34,7 +34,10 @@ public class Game {
         for (Team team : teams) {
             // Teletransportar jogares
             for (Player player : team.getPlayers()) {
-                team.teleportPlayerToSpawn(player);
+                if (player != null) {
+                    team.teleportPlayerToSpawn(player);
+                    player.setGameMode(GameMode.SURVIVAL);
+                }
             }
 
             // Começar o timer dos itemSpawners
@@ -51,7 +54,7 @@ public class Game {
     }
 
     void ganhar(Team team) {
-        Bukkit.broadcastMessage("Time " + team.color.toString() + " GANHOU!!");
+        Bukkit.broadcastMessage("Time " + team.color + " GANHOU!! PARABENS");
     }
 
     void resetar() {

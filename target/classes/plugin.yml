@@ -3,3 +3,7 @@ version: '1.0-SNAPSHOT'
 main: com.monitoria.bedwars.BedWars
 api-version: '1.20'
 author: Bruno D'Luka
+commands:
+  bedwars_start:
+    description: Start the game
+    usage: /bedwars_start
