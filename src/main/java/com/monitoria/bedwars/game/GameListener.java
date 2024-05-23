@@ -62,18 +62,14 @@ public class GameListener implements Listener {
     void onPlayerDeath(PlayerDeathEvent event) {
         Player player = event.getEntity();
 
-        Team team = null;
-        for (Team t : game.teams) {
-            for (Player teamPlayer : t.getPlayers()) {
+        for (Team team : game.teams) {
+            for (Player teamPlayer : team.getPlayers()) {
                 if (teamPlayer == player) {
-                    team = t;
-
                     if (team.isBedActive) {
                         team.teleportPlayerToSpawn(player);
                     } else {
                         player.setGameMode(GameMode.SPECTATOR);
                     }
-
                     break;
                 }
             }
