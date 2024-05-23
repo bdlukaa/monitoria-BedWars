@@ -33,20 +33,29 @@ public class GameListener implements Listener {
 
         playersJoined++;
         boolean added = false;
-        for (int i = 0; i < game.teams.toArray().length; i++) {
-            Team team = game.teams.get(i);
+        for (Team team : game.teams) {
             if (team.player1 == null) {
                 team.player1 = player;
                 added = true;
                 break;
-            } else if (team.player2 == null) {
-                team.player2 = player;
-                added = true;
-                break;
-            } else if (team.player3 == null) {
-                team.player3 = player;
-                added = true;
-                break;
+            }
+        }
+        if (!added) {
+            for (Team team : game.teams) {
+                if (team.player2 == null) {
+                    team.player2 = player;
+                    added = true;
+                    break;
+                }
+            }
+        }
+        if (!added) {
+            for (Team team : game.teams) {
+                if (team.player3 == null) {
+                    team.player3 = player;
+                    added = true;
+                    break;
+                }
             }
         }
 
@@ -66,6 +75,7 @@ public class GameListener implements Listener {
         for (Team team : game.teams) {
             for (Player teamPlayer : team.getPlayers()) {
                 if (teamPlayer == player) {
+                    player.spigot().respawn();
                     if (team.isBedActive) {
                         team.teleportPlayerToSpawn(player);
                     } else {
@@ -98,7 +108,7 @@ public class GameListener implements Listener {
             if (block.getType() == team.getBedMaterial()) {
                 team.isBedActive = false;
                 event.setDropItems(false);
-                Bukkit.broadcastMessage("A cama " + team.color.toString() " foi quebrada");
+                Bukkit.broadcastMessage("A cama " + team.color.toString() + " foi quebrada");
             }
         }
     }
