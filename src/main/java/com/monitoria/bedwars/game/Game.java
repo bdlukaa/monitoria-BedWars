@@ -26,17 +26,19 @@ public class Game {
     }
 
     void iniciar() {
-        for (int i = 0; i < teams.size(); i++) {
-            Team team = teams.get(i);
-
+        Bukkit.broadcastMessage("Iniciando jogo!! Boa sorte");
+        for (Team team : teams) {
             // Teletransportar jogares
-            team.teleportPlayerToSpawn(team.player1);
-            team.teleportPlayerToSpawn(team.player2);
-            team.teleportPlayerToSpawn(team.player3);
+            for (Player player : team.getPlayers()) {
+                team.teleportPlayerToSpawn(player);
+            }
 
             // Começar o timer dos itemSpawners
             team.itemSpawner.startTimer();
-            team.itemSpawner.spawn();
+        }
+
+        for (ItemSpawner itemSpawner : itemSpawnPoints) {
+            itemSpawner.startTimer();
         }
     }
 
@@ -45,7 +47,7 @@ public class Game {
     }
 
     void ganhar(Team team) {
-        System.out.println("Time " + team.color.toString() + " GANHOU!!");
+        Bukkit.broadcastMessage("Time " + team.color.toString() + " GANHOU!!");
     }
 
     void resetar() {
@@ -57,7 +59,6 @@ public class Game {
         teams.add(new Team(Color.BLACK, -106, 52, 47, new ItemSpawner(new Location(world, -106, 50, 54), null)));
         teams.add(new Team(Color.WHITE, 43, 52, 50, new ItemSpawner(new Location(world, 43, 50, 54), null)));
         teams.add(new Team(Color.BLUE, 99, 52, 50, new ItemSpawner(new Location(world, 99, 50, 54), null)));
-
 
         itemSpawnPoints.clear();
         itemSpawnPoints.add(new ItemSpawner(new Location(world, 69, 51, 0), Material.DIAMOND));

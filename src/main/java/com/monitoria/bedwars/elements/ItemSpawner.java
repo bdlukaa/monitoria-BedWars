@@ -27,7 +27,7 @@ public class ItemSpawner {
     public void startTimer() {
         timer = new Timer();
         TimerTask task = new SpawnTask(this);
-        timer.schedule(task, 1000, 100000);
+        timer.schedule(task, 0, 1000);
     }
 
 
