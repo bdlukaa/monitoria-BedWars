@@ -30,7 +30,7 @@ public class ItemSpawner {
             public void run() {
                 spawn();
             }
-        }.runTaskTimer(BedWars.instance, 0, 1000);
+        }.runTaskTimer(BedWars.instance, 0, 100);
     }
 
 
