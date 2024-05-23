@@ -23,6 +23,7 @@ public class Game {
 
     public Game() {
         resetar();
+        Bukkit.getWorld("world").setAutoSave(false);
     }
 
     public void iniciar() {
