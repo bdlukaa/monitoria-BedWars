@@ -26,6 +26,10 @@ public class Game {
     }
 
     public void iniciar() {
+        if (status != GameStatus.iniciando) {
+            System.out.println("Jogo já iniciado.");
+            return;
+        }
         Bukkit.broadcastMessage("Iniciando jogo!! Boa sorte");
         for (Team team : teams) {
             // Teletransportar jogares
