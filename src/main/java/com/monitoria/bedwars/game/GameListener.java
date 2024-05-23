@@ -1,6 +1,7 @@
 package com.monitoria.bedwars.game;
 
 import com.monitoria.bedwars.elements.Team;
+import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -96,7 +97,8 @@ public class GameListener implements Listener {
         for (Team team : game.teams) {
             if (block.getType() == team.getBedMaterial()) {
                 team.isBedActive = false;
-                System.out.println("Cama " + team.color.toString() + " quebrada");
+                event.setDropItems(false);
+                Bukkit.broadcastMessage("A cama " + team.color.toString() " foi quebrada");
             }
         }
     }
